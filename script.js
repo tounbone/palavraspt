@@ -7,20 +7,36 @@ const words = [
     { word: "Desert", image: "https://via.placeholder.com/300?text=Desert", description: "A hot, arid desert." }
 ];
 
-function getRandomCard() {
-    const randomIndex = Math.floor(Math.random() * words.length);
-    return words[randomIndex];
+const container = document.querySelector('.container');
+
+function createCard(data) {
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    const wordElement = document.createElement('h1');
+    wordElement.textContent = data.word;
+
+    const imageElement = document.createElement('img');
+    imageElement.src = data.image;
+    imageElement.alt = data.word;
+
+    const descriptionElement = document.createElement('p');
+    descriptionElement.textContent = data.description;
+
+    card.appendChild(wordElement);
+    card.appendChild(imageElement);
+    card.appendChild(descriptionElement);
+
+    return card;
 }
 
-function updateCard() {
-    const cardData = getRandomCard();
-    document.getElementById('word').textContent = cardData.word;
-    document.getElementById('image').src = cardData.image;
-    document.getElementById('image').alt = cardData.word;
-    document.getElementById('description').textContent = cardData.description;
+function populateCards() {
+    for (let i = 0; i < 10; i++) { // You can change the number of cards
+        const randomIndex = Math.floor(Math.random() * words.length);
+        const cardData = words[randomIndex];
+        const card = createCard(cardData);
+        container.appendChild(card);
+    }
 }
 
-document.getElementById('nextButton').addEventListener('click', updateCard);
-
-// Initialize with a random card
-updateCard();
+populateCards();
